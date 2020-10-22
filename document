@@ -1,0 +1,29 @@
+javascript uses Ecmascript's grammer and add the web API 
+nodeJS can load http  and fs manipulation
+
+Ecmascript 是语法规范
+
+nodeJS = Ecmascript + nodejsAPI
+
+在package.json 中依赖的文件 直接require 不需要 导入路径
+
+npm init  -y 初始化文档 生成package.json
+
+server 和前端区别
+
+    server 端考虑稳定性 CPU 内存优化(优化扩展)
+
+    集群和服务拆分
+
+    server 端承载很多请求 CPU内存都是稀缺资源
+
+    用stream 写日志 redis 存session
+
+    server 端要记录日志 存储日志 分析日志
+
+    server 端要准备接受各种恶意攻击
+
+    数据库攻击  预防xss攻击 sql注入
+
+ 
+
