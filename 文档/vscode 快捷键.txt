@@ -1,0 +1,11 @@
+ctrl shift k 删除行
+折叠代码： ctrl + k + 0-9 (0是完全折叠)
+28、快速回到顶部 ： ctrl + home
+
+29、快速回到底部 : ctrl + end
+
+30、格式化选定代码 ：ctrl + k / ctrl +
+21、全局查找文件：ctrl + shift + f
+6、控制台终端显示与隐藏：ctrl + ~
+ctrl + backspace 删除上一个单词
+

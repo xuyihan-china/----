@@ -1,0 +1,5 @@
+const {add,multiple} =require('./common')
+const _ = require('loadsh')
+const sum = add(10,20)
+const mul = multiple(10,30)
+console.log(sum,mul)
