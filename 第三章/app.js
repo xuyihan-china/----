@@ -14,6 +14,19 @@ http.createServer((req,res)=>{
         query
     }
     if(method==='GET'){
-
+        res.end(
+            JSON.stringify(resData)
+        )
+    }
+    if(method==='POST'){
+        let postData = ''
+        req.on('data',chunk=>{
+            postData+=chunk.toString()
+        })
+        req.on('end',()=>{
+            res.end(resData)
+        })
     }
 })
+server.listen(8000)
+console.log('OK')

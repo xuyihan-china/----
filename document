@@ -46,6 +46,15 @@ server 和前端区别
 新建文件用post请求
     流是文件传输 服务器不可以一起接受很多数据 所以用一根管子链接不同的端口
     
+    如何处理post get 请求
+    post 客户端发过来的数据 
+    req.on ('data',(chuck)=>{resData+=chuck})
+    req.on('end',res.end(res.data))
+   
+   req里有几种方法： req.url 获取url
+   querystring.parse(xxx)
+   const method = req.method
+   
         
 
 
