@@ -23,7 +23,32 @@ server 和前端区别
 
     server 端要准备接受各种恶意攻击
 
-    数据库攻击  预防xss攻击 sql注入
+    数据库攻击  预防xss攻击 
+
+技术方案
+
+    数据如何存储
+
+        博客  用户
+        存储博客 id title content createTime author
+        存储用户 id username password realName
+
+    如何前端对接,接口设计
+    登录 统一的解决方案 
+
+   DNS TCP http 请求
+   server端 接受http请求 处理 返回  
+
+   get 请求 要向server端获取数据 查询博客列表
+   通过queryString 传递数据
+   浏览器直接访问 get请求
+
+新建文件用post请求
+    流是文件传输 服务器不可以一起接受很多数据 所以用一根管子链接不同的端口
+    
+        
+
+
 
  
 
