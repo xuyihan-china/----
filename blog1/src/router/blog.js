@@ -1,11 +1,14 @@
+const {getList} = require('../controller/blog')
+const {SuccessModel,ErrorModel} = require('../model/resModel')
 const handleBlogRouter=(req,res)=>{
     const method = req.method
     const url = req.url
     const path = url.split('?')[0]
     if(method ==='GET'&& path==='/api/blog/list'){
-        return{
-            msg:'博客列表'
-        }
+        const author = req.query.author || ''
+        const keyword = req.query.author || ''
+        const listData =getList(author,keyword)
+        return new SuccessModel(listData)
     }
     if(method==='POST'&&path ==='/api/blog/detail'){
         return{
