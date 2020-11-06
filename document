@@ -51,9 +51,34 @@ server 和前端区别
     req.on ('data',(chuck)=>{resData+=chuck})
     req.on('end',res.end(res.data))
    
+
+
+
    req里有几种方法： req.url 获取url
    querystring.parse(xxx)
    const method = req.method
+
+主要是
+   要获取http 模块 
+   要http.createServer((req,res)=>{
+        
+   })
+   server.listen(3000,()=>{})
+   
+博客模块
+   1.对路由的处理 
+    const method = req.method
+    const url = req.url
+    const path = url.path.split('?')[0]
+    const query = querystring.parse(url.path.split('?')[1])
+   
+
+   1.请求的method 请求的method Get post /or else 那么之后可以判断method是什么
+   2.url 请求的资源路径 127.0.0.1/bin/post?id=1:3000 /bin/post/3000
+   3.url 里面分为 path 和 query  path 是 ? 之前的 query 是问好之后的
+   4. split 是将 ? 作为分隔符号  前一部分为 0 后一部分为1 
+   const path = url.path.split('?')[0]
+   const query = url.path.split('?')[1]
    
         
 

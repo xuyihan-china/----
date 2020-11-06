@@ -16,7 +16,7 @@ class BaseModel {
 class SuccessModel extends BaseModel{
     constructor(data,message){
         super(data,message)
-        this.erron =0
+        this.error =0
     }
 }
 class ErrorModel extends BaseModel{
