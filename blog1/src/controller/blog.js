@@ -1,3 +1,4 @@
+//controller 最关心的是数据 没有 res req 之类的数据
 const getList=(author,keyword) =>{
     //返回假数据 格式正确
     return [

@@ -1,6 +1,6 @@
 const http = require('http')
-
-const PORT = 8000
+//完全是createserver 的逻辑 
+const PORT = 3000
 const serverHandle = require('../app.js')
 const server = http.createServer(serverHandle)
 server.listen(PORT,()=>{
