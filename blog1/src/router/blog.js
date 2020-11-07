@@ -8,13 +8,14 @@ const handleBlogRouter=(req,res)=>{
 
     //获取博客列表
     if(method ==='GET'&& path==='/api/blog/list'){
-        const author = req.query.author || ''
+        const author = req.query.author || ''   //author 和 keyword 是通过query 来获取
         const keyword = req.query.keyword || '' //获取query后面的数据 ? author=""&keyword=""
         const listData =getList(author,keyword) //返回一个数组 假装是通过 author 和 keyword 来获取列表
         return new SuccessModel(listData)
     }
     if(method==='POST'&& path ==='/api/blog/detail'){
         return{
+            //return 后面做详细操作
             msg:'详情页面'
         }
     }

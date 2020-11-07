@@ -16,13 +16,13 @@ class BaseModel {
 class SuccessModel extends BaseModel{
     constructor(data,message){
         super(data,message)
-        this.errno =0
+        this.errno =0 //返回成功的值
     }
 }
 class ErrorModel extends BaseModel{
     constructor(data,message){
         super(data,message)
-        this.errno=-1
+        this.errno=-1 //失败的 值为-1
     }
 }
 module.exports={
