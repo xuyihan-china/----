@@ -33,6 +33,7 @@ const getPostData = (req) => {
             )
         })
     })
+    return promise
 }
 
 
@@ -46,7 +47,7 @@ const serverHandle = (req, res) => {
     // const path = url.split('?')[0]
     //解析query
     req.query = querystring.parse(url.split('?')[1])
-    //处理postData 
+    //处理postData const getPostData = req => const getPostData = (req) => {
     getPostData(req).then(
         postData => {
             req.body = postData
