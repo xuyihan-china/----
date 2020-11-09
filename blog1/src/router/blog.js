@@ -6,6 +6,7 @@ const handleBlogRouter=(req,res)=>{
     const url = req.url
     const path = url.split('?')[0]
     const id = req.query.id //拿到传入的值
+    
     //获取博客列表
     if(method ==='GET'&& path==='/api/blog/list'){
         const author = req.query.author || ''   //author 和 keyword 是通过query 来获取
