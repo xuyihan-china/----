@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 javascript uses Ecmascript's grammer and add the web API 
 nodeJS can load http  and fs manipulation
 
@@ -92,3 +93,99 @@ server 和前端区别
 
  
 
+=======
+javascript uses Ecmascript's grammer and add the web API 
+nodeJS can load http  and fs manipulation
+
+Ecmascript 是语法规范
+
+nodeJS = Ecmascript + nodejsAPI
+
+在package.json 中依赖的文件 直接require 不需要 导入路径
+
+npm init  -y 初始化文档 生成package.json
+
+server 和前端区别
+
+    server 端考虑稳定性 CPU 内存优化(优化扩展)
+
+    集群和服务拆分
+
+    server 端承载很多请求 CPU内存都是稀缺资源
+
+    用stream 写日志 redis 存session
+
+    server 端要记录日志 存储日志 分析日志
+
+    server 端要准备接受各种恶意攻击
+
+    数据库攻击  预防xss攻击 
+
+技术方案
+
+    数据如何存储
+
+        博客  用户
+        存储博客 id title content createTime author
+        存储用户 id username password realName
+
+    如何前端对接,接口设计
+    登录 统一的解决方案 
+
+   DNS TCP http 请求
+   server端 接受http请求 处理 返回  
+
+   get 请求 要向server端获取数据 查询博客列表
+   通过queryString 传递数据
+   浏览器直接访问 get请求
+
+新建文件用post请求
+    流是文件传输 服务器不可以一起接受很多数据 所以用一根管子链接不同的端口
+    
+    如何处理post get 请求
+    post 客户端发过来的数据 
+    req.on ('data',(chuck)=>{resData+=chuck})
+    req.on('end',res.end(res.data))
+   
+
+
+
+   req里有几种方法： req.url 获取url
+   querystring.parse(xxx)
+   const method = req.method
+
+主要是
+   要获取http 模块 
+   要http.createServer((req,res)=>{
+        
+   })
+   server.listen(3000,()=>{})
+   
+博客模块
+   1.对路由的处理 
+    const method = req.method
+    const url = req.url
+    const path = url.path.split('?')[0]
+    const query = querystring.parse(url.path.split('?')[1])
+   
+
+   1.请求的method 请求的method Get post /or else 那么之后可以判断method是什么
+   2.url 请求的资源路径 127.0.0.1/bin/post?id=1:3000 /bin/post/3000
+   3.url 里面分为 path 和 query  path 是 ? 之前的 query 是问好之后的
+   4. split 是将 ? 作为分隔符号  前一部分为 0 后一部分为1 
+   const path = url.path.split('?')[0]
+   const query = url.path.split('?')[1]
+   
+        
+
+路由和API的区别:
+   API:前端和后端、不同端、子系统之间对接 的一个术语
+   1.只关心 包括 url 输入 输出
+路由的理解：
+   1. api的一部分
+   2.后端系统内部的一个分支（DB,CONTROLLER,MODEL,ROUTER）
+
+
+ 
+
+>>>>>>> e440e0f1711cc48ec460383eed55a954c6a98a78

@@ -1,6 +1,6 @@
 //只管路由 命中路由 返回正确的格式
-const {getList,getDetail,newBlog,updataBlog,delBlog} = require('../controller/blog')
-const {SuccessModel,ErrorModel} = require('../model/resModel')
+const {getList,getDetail,newBlog,updateBlog,delBlog} = require('../controller/blog')
+const {SuccessModel,ErrorModel} = require('./resModel')
 const handleBlogRouter=(req,res)=>{
     const method = req.method
     const url = req.url
@@ -23,7 +23,7 @@ const handleBlogRouter=(req,res)=>{
         return new SuccessModel(data)
     }
     if(method ==='POST'&& path ==='/api/blog/update'){
-        const result = updataBlog(id,req.body)
+        const result = updateBlog(id,req.body)
         if(result){
             return new SuccessModel()
         }else{
@@ -41,5 +41,3 @@ const handleBlogRouter=(req,res)=>{
     }
 }
 module.exports=handleBlogRouter
-
-//我就要

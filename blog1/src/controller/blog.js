@@ -1,4 +1,4 @@
-//controller 最关心的是数据 没有 res req 之类的数据 
+//controller 最关心的是数据 没有 res req 之类的数据  11
 //为什么要将router 和 controller 分开 因为router 关心路由 controller关心数据来源---<给参数返回数据 
 const getList=(author,keyword) =>{
     //返回假数据 格式正确
@@ -40,7 +40,7 @@ const newBlog = (blogData ={}) =>{
     }
        
 }
-const updataBlog =(id,blogData={})=>{
+const updateBlog =(id,blogData={})=>{
     return true //更新成功
 }
 
@@ -49,5 +49,5 @@ const delBlog =(id)=>{
 }
 
 module.exports ={
-    getList,getDetail,newBlog,updataBlog,delBlog
+    getList,getDetail,newBlog,updateBlog,delBlog
 }
