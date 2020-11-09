@@ -52,14 +52,24 @@ const serverHandle = (req, res) => {
         postData => {
             req.body = postData
             //以下的路由可以通过postData 来获取数据
-            //处理blog路由
-            const blogData = handleBlogRouter(req, res)
-            if (blogData) {
+
+            //根据处理返回的路由
+            const blogResult = handleBlogRouter(req,res)
+            blogResult.then(blogData =>{
                 res.end(
-                    JSON.stringify(blogData) //JSON.stringify 将JavaScript 数值转化为 JSON格式
+                        JSON.stringify(blogData)    
                 )
-                return
-            }
+                return 
+            })
+
+            //处理blog路由
+            // const blogData = handleBlogRouter(req, res)
+            // if (blogData) {
+            //     res.end(
+            //         JSON.stringify(blogData) //JSON.stringify 将JavaScript 数值转化为 JSON格式
+            //     )
+            //     return
+            // }
 
             const userData = handleUserRouter(req, res)
             if (userData) {

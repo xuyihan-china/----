@@ -1,24 +1,20 @@
 //controller 最关心的是数据 没有 res req 之类的数据  11
 //为什么要将router 和 controller 分开 因为router 关心路由 controller关心数据来源---<给参数返回数据 
-const getList=(author,keyword) =>{
-    //返回假数据 格式正确
-    return [
-        {
-            id:1,
-            title:'标题1',
-            content:'内容A',
-            createTime:1546610491112,
-            author:'xu'
-        },
-        {
-            id:2,
-            title:'标题B',
-            content:'内容B',
-            createTime:1567778989898,
-            author:'yi'
-        }
-    ]
-}
+const {
+    exec
+  } = require('../db/mysql')
+  const getList = (author, keyword) => {
+    // 先返回假数据
+    let sql = `select * from blogs where 1=1 `
+    if (author) {
+      sql += `and author='${author}' `
+    }
+    if (keyword) {
+      sql += `and title like '%${keyword}%' `
+    }
+    sql += `order by createtime desc;`
+    return exec(sql)
+  };
 //根据id 获取基本信息 111
 const getDetail = (id)=>{
     return [

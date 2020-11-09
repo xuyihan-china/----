@@ -10,8 +10,13 @@ const handleBlogRouter=(req,res)=>{
     if(method ==='GET'&& path==='/api/blog/list'){
         const author = req.query.author || ''   //author 和 keyword 是通过query 来获取
         const keyword = req.query.keyword || '' //获取query后面的数据 ? author=""&keyword=""
-        const listData =getList(author,keyword) //返回一个数组 假装是通过 author 和 keyword 来获取列表
-        return new SuccessModel(listData)
+        const result =getList(author,keyword) //返回一个数组 假装是通过 author 和 keyword 来获取列表
+        //result 返回的是一个新的promise
+        return result.then(
+            listData =>{
+                return new SuccessModel(listData)//传入listData是promise 那么后面处理的也要是promise
+            }
+        )
     }
     if(method==='GET'&& path ==='/api/blog/detail'){
         const data =getDetail(id) //执行controller中的函数 为了拿到假数据
