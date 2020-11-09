@@ -19,7 +19,7 @@ const getList=(author,keyword) =>{
         }
     ]
 }
-//根据id 获取基本信息 11
+//根据id 获取基本信息 111
 const getDetail = (id)=>{
     return [
         {
