@@ -14,6 +14,7 @@ const handleBlogRouter=(req,res)=>{
         //result 返回的是一个新的promise
         return result.then(
             listData =>{
+                console.log(listData)
                 return new SuccessModel(listData)//传入listData是promise 那么后面处理的也要是promise
             }
         )

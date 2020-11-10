@@ -1,18 +1,32 @@
-const mysql =require('mysql')
-const {MYSQL_CONF} = require('../conf/db')
+/*
+ * @Author: chenchen 
+ * @Date: 2019-03-25 17:56:20 
+ * @Last Modified by:   chenchen 
+ * @Last Modified time: 2019-03-25 17:56:20 
+ */
+const mysql = require('mysql')
+const {
+    MYSQL_CONF
+} = require('../conf/db')
+
+// 创建con，不关闭，相当于一个单例模式，创建一次多次使用
 const con = mysql.createConnection(MYSQL_CONF)
+
 con.connect()
-//专门处理sql的函数
-function exec(sql){
-    const promise = new Promise()
-    con.query(sql,(err,result)=>{
-        if(err){
-            reject(err)
-            return 
-        }
-        resolve(result)
+
+function exec(sql) {
+    const promise = new Promise((resolve, reject) => {
+        con.query(sql, (err, result) => {
+            if (err) {
+                reject(err);
+                return
+            }
+            resolve(result);
+        });
     })
     return promise
 }
-module.exports={exec}
-    
+
+module.exports = {
+    exec
+}
