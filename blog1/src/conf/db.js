@@ -1,5 +1,5 @@
 const env = process.env.NODE_ENV
-
+console.log(env)
 let MYSQL_CONF
 if(env === 'dev'){
     MYSQL_CONF ={
