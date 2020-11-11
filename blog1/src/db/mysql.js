@@ -8,7 +8,7 @@ const mysql = require('mysql')
 const {
     MYSQL_CONF
 } = require('../conf/db')
-
+// 获取环境变量 
 // 创建con，不关闭，相当于一个单例模式，创建一次多次使用
 const con = mysql.createConnection(MYSQL_CONF)
 

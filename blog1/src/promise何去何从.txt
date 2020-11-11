@@ -1,0 +1,65 @@
+router 管理路由
+    基本参数
+
+
+
+
+app.js
+    首先的数据来源 postdata
+    postdata 以chunk 的方式 流入app.js --->controller --->router
+    postdata 里面返回一个promise  new promise 存储 得到 postdata 的过程
+    return promise
+
+
+
+db -> mysql.js
+    创建连接 mysql.createConnection （传递之前传入的Mysqlconf） 配置参数
+    mysql.connect()
+    定义exec 函数 传入参数 返回promise resolve（查到的data）
+
+model resModel
+规范化返回数据
+
+conf db.js
+这里是配置数据库的环境信息 根据不同的环境
+配置host 登陆的不同信息 返回一个配置常量 --> Mysql_CONF
+被mysql 引用
+
+controller 中的blog.js  user.js
+mysql.js 被这里引用因为这里是专门处理数据的
+
+
+
+
+
+
+
+
+
+
+
+查询之后：
+   用户打开浏览器
+   用户输入 api/list/blog 加上query语句 会触发 handleBlogRouter函数 分辨是哪一个路由触发的 --blog.js 路由分发
+   浏览器解析路径 query语句 提取 相关信息
+   handleBlogRouter函数 对路由进行if 判断 （1.路由 2.方法是post 还是 get）
+   解析里面对应路由的uri 传入客户端传的值 比如传入 author="xuyihan" 那么可以通过 req.query.author拿到xuyihan
+   传入 相应路由处理函数 比如getlist 要author id  delete 要 id
+   等待数据库查询 通过 controller 拼接这些传入的值写成sql 传入 exec(sql) 进行查询
+   接下来就是一个异步的过程了 ：---> exec 返回的是一个promise
+   exec(sql) -->返回一个promise  resolve(result) --> 返回的还是一个promise 后面还可以then
+   后面的.then 其实就是 得到的 resolve的result 
+   在user.js /blog.js 中 通过 const result 得到这个promise 
+   return result.then(data =>{  这里的data 就是上述 resolve 的result
+            if(得到时 数据有值){
+                return 标准化成功对象
+            }
+            return 标准化失败对像
+        }) 
+    标准化 对象是一个promise对象 实例
+    app.js 中拿到 blogResult
+    blogdata 就是resolve中的result
+    最后JOSN.stringfy(blogdata) 展示在客户端
+  
+   
+   

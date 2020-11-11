@@ -51,7 +51,8 @@ const serverHandle = (req, res) => {
     getPostData(req).then(
         postData => {
             req.body = postData
-            //以下的路由可以通过postData 来获取数据
+            //req.body 取到zhi就是 
+            //以下的路由可以通过req.body 来获取数据
 
             //根据处理返回的路由
             const blogResult = handleBlogRouter(req,res)
