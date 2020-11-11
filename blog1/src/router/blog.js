@@ -20,30 +20,47 @@ const handleBlogRouter=(req,res)=>{
         )
     }
     if(method==='GET'&& path ==='/api/blog/detail'){
-        const data =getDetail(id) //执行controller中的函数 为了拿到假数据
-        return new SuccessModel(data) //返回new xx
+        // const data =getDetail(id) //执行controller中的函数 为了拿到假数据
+        // return new SuccessModel(data) //返回new xx
+        const result = getDetail(id)
+        return result.then(
+            data =>{
+                return new SuccessModel(data)
+            }
+        )
     }
     if(method==='POST'&& path ==='/api/blog/new'){
-        const blogData = req.body //拿到值
-        const data = newBlog(req.body)
-        return new SuccessModel(data)
+        // const blogData = req.body //拿到值
+        // const data = newBlog(req.body)
+        // return new SuccessModel(data)
+        req.body.author= 'zhangsan'
+        const result = newBlog(req.body)
+        return result.then(data =>{
+            return new SuccessModel(data)
+        })
     }
     if(method ==='POST'&& path ==='/api/blog/update'){
         const result = updateBlog(id,req.body)
-        if(result){
-            return new SuccessModel()
-        }else{
-            return new ErrorModel('更新失败')
-        }
+        result.then(val =>{
+            if(val){
+                return new SuccessModel()
+            }else{
+                return new ErrorModel('更新博客失败')
+            }
+        })
     }
   
     if(method==='POST'&&path ==='/api/blog/delete'){
-       const result = delBlog(id)
-       if(result){
-        return new SuccessModel()
-    }else{
-        return new ErrorModel('删除失败')
-    }
+        const author ='zhangsan'
+       const result = delBlog(id,author)
+       return result.then(val=>{
+            if(val){
+                return new SuccessModel()
+            }else{
+                return new ErrorModel('失败了')
+            }
+       })
+       
     }
 }
 module.exports=handleBlogRouter

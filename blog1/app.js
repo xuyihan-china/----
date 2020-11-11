@@ -55,14 +55,12 @@ const serverHandle = (req, res) => {
 
             //根据处理返回的路由
             const blogResult = handleBlogRouter(req,res)
-            
+            //blogResult 是一个promise 且不为空 那么就then 处理好了请求之后 then
             if(blogResult){
                 blogResult.then((blogData) =>{
-         
                     res.end(
                             JSON.stringify(blogData)    
                     )
-                    
                 })
                 return 
             }
@@ -77,13 +75,24 @@ const serverHandle = (req, res) => {
             //     return
             // }
 
-            const userData = handleUserRouter(req, res)
-            if (userData) {
-                res.end(
-                    JSON.stringify(userData)
-                )
+            // const userData = handleUserRouter(req, res)
+            // if (userData) {
+            //     res.end(
+            //         JSON.stringify(userData)
+            //     )
+            //     return
+            // }
+            const userResult = handleUserRouter(req,res)
+            if(userResult){
+                userResult.then(userData =>{
+                    res.end(JSON.stringify(userData))
+                })
                 return
             }
+
+
+
+
             res.writeHead(404, { "Content-type": "text/plain" })//返回纯文本 直接是纯文本404
             res.write("404 not Found\n")
             res.end()
