@@ -43,7 +43,6 @@ const handleUserRouter = (req, res) => {
             return Promise.resolve(new SuccessModel(
                 {
                     session: req.session,
-                    a: '成功了'
                 }
             ))
         }

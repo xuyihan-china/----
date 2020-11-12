@@ -7,6 +7,7 @@ process.env.NODE_ENV = 'dev'
 const handleBlogRouter = require('./src/router/blog')
 const handleUserRouter = require('./src/router/user')
 const querystring = require('querystring')
+const {get,set} = require('./src/db/redis')
 //用于处理postData 就是客户端传过来的数据
 
 //处理session
@@ -72,83 +73,88 @@ const serverHandle = (req, res) => {
        req.cookie[key]=val
        console.log(req.cookie) //
    });
-   //解析session
+   //解析session redis
    let  userId = req.cookie.userId//判断cookie中是否有userid
    //获取cookie中的userid  
    let needSetCookie= false
-   const SESSION_DATA={}
-   if(userId){
-    if(!SESSION_DATA[userId]){
-        SESSION_DATA[userId]={} //有这个userid 就添加
-    }
-   }else{
-       needSetCookie =true
-       userId =`${Date.now()}+${Math.random()}` //没有就随机生成
-       SESSION_DATA[userId] ={}
+   if(!userId){
+       needSetCookie=true
+       userId =`${Date.now()}+${Math.random()}`
+       //初始化set
+       set(userId,{})
    }
-   req.session = SESSION_DATA[userId] // 在session中添加 这个常量 
-   //如果两次 session data相同 那么知道是同一个用户
+   req.sessionId = userId;
+   get(req.sessionId)
+     .then(sessionData => {
+       console.log("req.sessionId userId",req.sessionId,userId);
+       console.log("sessionData",sessionData);
+       if (!sessionData) {
+         // 初始化redis 中session的初始值
+         set(req.sessionId, {});
+         // 设置session
+         req.session = {};
+       } else {
+         req.session = sessionData;
+       }
+       // console.log("req.session:", req.session);
+       return getPostData(req);
+     })
+     .then(postData => {
+       req.body = postData;
+       // 处理blog路由
+       // const blogData = handleBlogRouter(req, res);
+       // if (blogData) {
+       //   res.end(JSON.stringify(blogData));
+       //   return;
+       // }
+       const blogResult = handleBlogRouter(req, res);
+       if (blogResult) {
+         blogResult.then(blogData => {
+           // console.log(blogData);
+           if (needSetCookie) {
+             res.setHeader(
+               "Set-Cookie",
+               `userid=${userId};path='/';httpOnly;expires=${getCookieExpires()}`
+             );
+           }
+           res.end(JSON.stringify(blogData));
+         });
+         return;
+       }
+       // 处理user路由
+       // const userData = handleUserRouter(req, res);
+       // if (userData) {
+       //   res.end(JSON.stringify(userData));
+       //   return;
+       // }
+       const userResult = handleUserRouter(req, res);
+ 
+       if (userResult) {
+         userResult.then(userData => {
+           // console.log(userData);
+           if (needSetCookie) {
+             res.setHeader(
+               "Set-Cookie",
+               `userid=${userId};path='/';httpOnly;expires=${getCookieExpires()}`
+             );
+           }
+           res.end(JSON.stringify(userData));
+         });
+         return;
+       }
+       // 未命中路由： 返回404
+       res.writeHead(404, {
+         "Content-type": "text/plain"
+       });
+       res.write("404 Not Found\n");
+       res.end();
+     });
+ };
+ 
+ // 用于获取post请求的data
 
-    getPostData(req).then(
-        postData => {
-            req.body = postData
-            //req.body 取到值就是 
-            //以下的路由可以通过req.body 来获取数据
-
-            //根据处理返回的路由
-            const blogResult = handleBlogRouter(req,res)
-            //blogResult 是一个promise 且不为空 那么就then 处理好了请求之后 then
-            if(blogResult){
-                blogResult.then((blogData) =>{
-                    if(needSetCookie){
-                        res.setHeader('Set-Cookie',`userid=${userId}; path=/;httpOnly; expires=${getCookieExpires()}`) //只能通过后端来改 不可以通过前端来改
-                    }
-                    res.end(
-                            JSON.stringify(blogData)    
-                    )
-                })
-                return 
-            }
-            
-
-            //处理blog路由
-            // const blogData = handleBlogRouter(req, res)
-            // if (blogData) {
-            //     res.end(
-            //         JSON.stringify(blogData) //JSON.stringify 将JavaScript 数值转化为 JSON格式
-            //     )
-            //     return
-            // }
-
-            // const userData = handleUserRouter(req, res)
-            // if (userData) {
-            //     res.end(
-            //         JSON.stringify(userData)
-            //     )
-            //     return
-            // }
-            const userResult = handleUserRouter(req,res)
-            if(userResult){
-                if(needSetCookie){
-                    res.setHeader('Set-Cookie',`userid=${userId}; path=/;httpOnly; expires=${getCookieExpires()}`) //只能通过后端来改 不可以通过前端来改
-                }
-                userResult.then(userData =>{
-                    res.end(JSON.stringify(userData))
-                })
-                return
-            }
-
-
-
-
-            res.writeHead(404, { "Content-type": "text/plain" })//返回纯文本 直接是纯文本404
-            res.write("404 not Found\n")
-            res.end()
-        }
-    )
-
-}
-module.exports = serverHandle
+ 
+ module.exports = serverHandle;
 
 
 
