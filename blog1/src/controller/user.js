@@ -1,17 +1,16 @@
-const {exec} =require('../db/mysql')
-const loginCheck =(username,password)=>{
-    //先使用假数据
-    if(username ==='zhangsan' &&password ==='123'){
-        const sql = `select username , realname from users where username =${username} and password =${password} `
-        return exec(sql).then(
-            rows=>{
-                return rows[0] || {}
-            }
-        )
-    }
-    else
-    {
-        return false
-    }
+const {
+    exec
+} = require('../db/mysql')
+const login = (username, password) => {
+    const sql = `select username , realname from users where username='${username}' and password='${password}'`
+    return exec(sql).then(rows => {
+        if(rows[0] == void 0){
+            rows[0] = {}
+        }
+        return rows[0]
+    })
 }
-module.exports={loginCheck}
+
+module.exports = {
+    login
+}

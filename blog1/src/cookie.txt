@@ -1,0 +1,16 @@
+存储在浏览器的字符串
+跨域不共享 每一个域名都有cookie
+格式如下 k1=v1 k2=v2 k3=v3
+每次发送http请求 会将cookie 一起发送给server
+server 可以修改cookie 返回给浏览器
+req 发送 res 返回
+浏览器 可以通过js 修改cookie 有限制
+如果 在淘宝的网站下请求了百度这个网站的js
+那么会在浏览器中把baidu的cookie 带过去
+
+客户端查看cookie
+document.cookie
+
+server 查看cookie
+修改 cookie
+实现登陆验证

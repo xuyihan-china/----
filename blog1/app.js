@@ -8,6 +8,16 @@ const handleBlogRouter = require('./src/router/blog')
 const handleUserRouter = require('./src/router/user')
 const querystring = require('querystring')
 //用于处理postData 就是客户端传过来的数据
+
+//处理session
+const getCookieExpires = () => {
+    const d = new Date();
+    d.setTime(d.getTime() + 24 * 60 * 60 * 1000);
+    // console.log("d.toGMTstring() is", d.toGMTString());
+    return d.toGMTString();
+  };
+
+
 const getPostData = (req) => {
     const promise = new Promise((resolve, reject) => {//不是post就忽略
         if (req.method != 'POST') {
@@ -48,10 +58,41 @@ const serverHandle = (req, res) => {
     //解析query
     req.query = querystring.parse(url.split('?')[1])
     //处理postData const getPostData = req => const getPostData = (req) => {
+
+   //解析cookie
+   req.cookie ={}
+   const cookieStr = req.headers.cookie || ''
+   cookieStr.split(';').forEach(item => {
+       if(!item){
+           return 
+       }
+       const arr = item.split('=')
+       const key =arr[0].trim()
+       const val = arr[1]
+       req.cookie[key]=val
+       console.log(req.cookie) //
+   });
+   //解析session
+   let  userId = req.cookie.userId//判断cookie中是否有userid
+   //获取cookie中的userid  
+   let needSetCookie= false
+   const SESSION_DATA={}
+   if(userId){
+    if(!SESSION_DATA[userId]){
+        SESSION_DATA[userId]={} //有这个userid 就添加
+    }
+   }else{
+       needSetCookie =true
+       userId =`${Date.now()}+${Math.random()}` //没有就随机生成
+       SESSION_DATA[userId] ={}
+   }
+   req.session = SESSION_DATA[userId] // 在session中添加 这个常量 
+   //如果两次 session data相同 那么知道是同一个用户
+
     getPostData(req).then(
         postData => {
             req.body = postData
-            //req.body 取到zhi就是 
+            //req.body 取到值就是 
             //以下的路由可以通过req.body 来获取数据
 
             //根据处理返回的路由
@@ -59,6 +100,9 @@ const serverHandle = (req, res) => {
             //blogResult 是一个promise 且不为空 那么就then 处理好了请求之后 then
             if(blogResult){
                 blogResult.then((blogData) =>{
+                    if(needSetCookie){
+                        res.setHeader('Set-Cookie',`userid=${userId}; path=/;httpOnly; expires=${getCookieExpires()}`) //只能通过后端来改 不可以通过前端来改
+                    }
                     res.end(
                             JSON.stringify(blogData)    
                     )
@@ -85,6 +129,9 @@ const serverHandle = (req, res) => {
             // }
             const userResult = handleUserRouter(req,res)
             if(userResult){
+                if(needSetCookie){
+                    res.setHeader('Set-Cookie',`userid=${userId}; path=/;httpOnly; expires=${getCookieExpires()}`) //只能通过后端来改 不可以通过前端来改
+                }
                 userResult.then(userData =>{
                     res.end(JSON.stringify(userData))
                 })
