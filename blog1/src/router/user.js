@@ -2,7 +2,7 @@
 //处理路由就是 浏览器发送一个URL地址 解析请求方法
 const { login } = require('../controller/user')
 const { SuccessModel, ErrorModel } = require('../model/resModel')
-
+const {set,get} = require('../db/redis')
 
 //设置cookie 过期时间 expires
 const getCookieExpires = () => {
@@ -26,6 +26,7 @@ const handleUserRouter = (req, res) => {
         return result.then(data => {
             req.session.username = data.username //先赋值在判断
             req.session.realname = data.realname
+            set(req.sessionId,req.session)
             //如果拿到了session值 
             if (req.session.username) {
                 username2 =req.session.username
@@ -37,18 +38,18 @@ const handleUserRouter = (req, res) => {
         })
     }
 
-    if (method === 'GET' && path === '/api/user/login-test') {
-        //console.log('111')
-        if (1) {
-            return Promise.resolve(new SuccessModel(
-                {
-                    session: req.session,
-                }
-            ))
-        }
-        return Promise.resolve(new ErrorModel('没有登陆'))
+    // if (method === 'GET' && path === '/api/user/login-test') {
+    //     //console.log('111')
+    //     if (1) {
+    //         return Promise.resolve(new SuccessModel(
+    //             {
+    //                 session: req.session,
+    //             }
+    //         ))
+    //     }
+    //     return Promise.resolve(new ErrorModel('没有登陆'))
 
-    }
+    // }
 }
 module.exports = handleUserRouter
 

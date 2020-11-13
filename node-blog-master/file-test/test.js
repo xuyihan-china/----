@@ -3,14 +3,14 @@ const path = require('path')
 
 const fileName = path.resolve(__dirname, 'data.txt')
 
-// 读取文件内容
-// fs.readFile(fileName, (err, data) => {
-//     if (err) {
-//         console.error(err)
-//         return
-//     }
-//     console.log(data.toString());
-// })
+读取文件内容
+fs.readFile(fileName, (err, data) => {
+    if (err) {
+        console.error(err)
+        return
+    }
+    console.log(data.toString());
+})
 
 // 写入文件
 // const content = "qwe\n"

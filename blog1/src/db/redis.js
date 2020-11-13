@@ -15,7 +15,8 @@ const set = (key, val) => {
   client.set(key, val, redis.print);
 };
 
-const get = key => {
+const get = key => {//传入的值在reids中 以简直对的形式储存  sessionID = username
+   
   const promise = new Promise((resolve, reject) => {
     client.get(key, (err, val) => {
       if (err) {
