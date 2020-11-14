@@ -4,6 +4,9 @@ app.use((req,res,next)=>{
     console.log('请求开始',req.method,req.url)
     next()
 })
+//首先执行 低哦一个参数没有的路由 第二执行父路由含有的路由
+//通过next的方法往下串联  use内的函数 就是中间件
+
 //第一个参数没有写路由 都会访问
 
 app.use((req,res,next)=>{
@@ -33,7 +36,7 @@ app.use('/api',(req,res,next)=>{
 
 app.get('/api',(req,res,next)=>{
     console.log('get /api luyou')
-    next()
+    next()//联系app.use  不执行next 后面的代码都不执行
 })
 
 app.post('/api',(req,res,next)=>{
