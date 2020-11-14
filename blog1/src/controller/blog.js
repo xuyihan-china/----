@@ -5,6 +5,8 @@ const {
   } = require('../db/mysql')
   const getList = (author, keyword) => {
     // 先返回假数据
+    const author = escape(author)
+    const keyword = escape(keyword)
     let sql = `select * from blogs where 1=1 `
     if (author) {
       sql += `and author='${author}' `

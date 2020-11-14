@@ -9,9 +9,9 @@ const readSteam = fs.createReadStream(fileName1)
 //写入文件2
 const writeSteam = fs.createWriteStream(fileName2)
 
-readSteam.pipe(writeSteam)
+readSteam.pipe(writeSteam) ///read steam 流入 writeStream
 readSteam.on('data',chunk=>{
-    console.log(chunk.toString());
+    console.log(chunk.toString()); //监听结束标志
 })
 
 readSteam.on('end',()=>{
