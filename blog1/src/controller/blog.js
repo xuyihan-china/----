@@ -4,7 +4,7 @@ const {
     exec
   } = require('../db/mysql')
   const getList = (author, keyword) => {
-    // 先返回假数据
+    // 先返回假数据 sql 注入攻击
     const author = escape(author)
     const keyword = escape(keyword)
     let sql = `select * from blogs where 1=1 `
@@ -56,7 +56,7 @@ const updateBlog =(id,blogData={})=>{
     return false;
   })
 }
-
+//这里return 的值 就是下一个函数then的参数
 const delBlog =(id,author)=>{
     const sql = `delete from blogs where id='${id}' and author = '${author}'`
     return exec(sql).then(delData =>{

@@ -17,7 +17,7 @@ const handleBlogRouter=(req,res)=>{
     if(method ==='POST'&& path==='/api/blog/list'){
         const author = req.body.author || ''   //author 和 keyword 是通过query 来获取
         const keyword = req.body.keyword || '' //获取query后面的数据 ? author=""&keyword=""
-        const result =getList(author,keyword) //返回一个数组 假装是通过 author 和 keyword 来获取列表
+        const result =getList(author,keyword) //返回一个数组 假装是通过 author 和 keyword 来获取列表 controller 中获取再回来
         //result 返回的是一个新的promise
         return result.then(
             listData =>{
@@ -68,8 +68,9 @@ const handleBlogRouter=(req,res)=>{
   
     if(method==='POST'&&path ==='/api/blog/delete'){
         req.body.author= req.session.username
+        let author = req.session.username
        const result = delBlog(id,author)
-       return result.then(val=>{
+       return result.then(val=>{//这里传入 true 或者false
             if(val){
                 return new SuccessModel()
             }else{

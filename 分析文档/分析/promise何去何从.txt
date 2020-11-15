@@ -63,3 +63,17 @@ mysql.js 被这里引用因为这里是专门处理数据的
   
    
    
+handleBlogRouter 是 在app.js 中接受的 blogResult data 
+
+在promise中 第一个函数的return值 就是第二个函数 .then()的参数 
+
+return false
+
+result.then(val =>{
+    if(val){
+        return xxx new SuccessModel
+    }
+    return new ErrorModel
+})
+
+sql 中返回的 affected Rows > 0 这样的参数
