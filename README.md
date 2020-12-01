@@ -1,20 +1,20 @@
 # Nodejs-Koa2
-####nodejs 体系问题：
-    ####nodejs是什么？
+#### nodejs 体系问题：
+    nodejs是什么？
         nodejs是基于chrome V8 引擎的JavaScript 的运行环境
         nodejs之前可以在浏览器运行，node出现之后，nodejs可以在nodejs环境下运行
 
-    ####nodejs和前端js的区别？
+    ##### nodejs和前端js的区别？
        都使用 了ES语法
        前端 webAPI
        后端 node API
 
-    ####nodejs如何调试？
+    #### nodejs如何调试？
        启动nodejs服务 使用inspect
        使用debugger
        chrome中debug chrome://inspect
 
-    ####当前文件和目录的路径 如何获取？
+    #### 当前文件和目录的路径 如何获取？
        path.resolve(__dirname,)
        path.resolve(__pathname,)
        两个全局变量
