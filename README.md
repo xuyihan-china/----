@@ -18,7 +18,7 @@
        path.resolve(__pathname,)
        两个全局变量
 
-   ####commonjs 和 es6的区别？
+   commonjs 和 es6的区别？
         1.语法不同
         2.commonjs 是动态引入
            if(xxx){const resource = require('../module/app.js')} 可以在执行的时候引入
