@@ -1,7 +1,5 @@
 //app.js 基础设置的聚集地 系统的基础的功能
 process.env.NODE_ENV = 'dev'
-
-
 //引入文件 处理响应的子路由
 
 const handleBlogRouter = require('./src/router/blog')
@@ -40,12 +38,13 @@ const getPostData = (req) => {
                 return
             }
             resolve(
-                JSON.parse(postData)
+                JSON.parse(postData)//把postData 转化为一个对象 JSON.parse
             )
         })
     })
     return promise
 }
+
 
 
 // http.createServer((req,res)=>{})

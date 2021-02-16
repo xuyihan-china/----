@@ -9,7 +9,7 @@ const server = http.createServer((req, res) => {
     console.log('query:', req.query);
     res.end(
         JSON.stringify(req.query)
-    )
+    )  
 })
 
 server.listen(8000)

@@ -5,10 +5,10 @@ const con = mysql.createConnection({
     user:'root',
     password:'ilovemysql',
     port:'3306',
-    database:'myblog'
+    database:'test'
 })
 con.connect()
-const sql = 'select * from users;'
+const sql = 'select * from user;'
 
 con.query(sql,(err,result)=>{
     if(err){
